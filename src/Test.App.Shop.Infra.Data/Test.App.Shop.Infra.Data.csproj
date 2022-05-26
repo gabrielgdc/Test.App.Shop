@@ -13,11 +13,12 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.5" />
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Test.App.Shop.Application\Test.App.Shop.Application.csproj" />
+        <ProjectReference Include="..\Test.App.Shop.Infra.CrossCutting.Environments\Test.App.Shop.Infra.CrossCutting.Environments.csproj" />
     </ItemGroup>
 
 </Project>
