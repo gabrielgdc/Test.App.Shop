@@ -6,6 +6,12 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Test.App.Shop.Application.Adapters.Identity;
+using Test.App.Shop.Domain.Aggregates.UserAggregate;
+using Test.App.Shop.Domain.SeedWork;
+using Test.App.Shop.Infra.CrossCutting.Identity.Core;
+using Test.App.Shop.Infra.Data.Repositories.UserRepository;
+using Test.App.Shop.Infra.Data.UnitOfWork;
 
 namespace Test.App.Shop.Infra.CrossCutting.IoC;
 
@@ -15,14 +21,15 @@ public static class NativeInjectorBootstrapper
     {
         RegisterData(services);
         RegisterMediatR(services);
+        RegisterIdentity(services);
         RegisterEnvironments(services, configuration);
     }
 
     private static void RegisterData(IServiceCollection services)
     {
         services.AddMemoryCache();
-        // here goes your repository injection
-        // sample: services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUserRepository, UserRepository>();
     }
 
     private static void RegisterMediatR(IServiceCollection services)
@@ -42,5 +49,11 @@ public static class NativeInjectorBootstrapper
     private static void RegisterEnvironments(IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton(configuration.GetSection(nameof(ApplicationConfiguration)).Get<ApplicationConfiguration>());
+        services.AddSingleton(configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>());
+    }
+
+    private static void RegisterIdentity(IServiceCollection services)
+    {
+        services.AddScoped<ITokenManager, JwtTokenManager>();
     }
 }

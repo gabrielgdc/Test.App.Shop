@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.App.Shop.Infra.Data", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.App.Shop.Infra.CrossCutting.Environments", "src\Test.App.Shop.Infra.CrossCutting.Environments\Test.App.Shop.Infra.CrossCutting.Environments.csproj", "{BA5501A3-07A6-4281-A217-298083EC34D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.App.Shop.Infra.CrossCutting.Identity", "src\Test.App.Shop.Infra.CrossCutting.Identity\Test.App.Shop.Infra.CrossCutting.Identity.csproj", "{305BA2B0-5DA0-43D1-9953-CB8505B30DBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,10 @@ Global
 		{BA5501A3-07A6-4281-A217-298083EC34D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA5501A3-07A6-4281-A217-298083EC34D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA5501A3-07A6-4281-A217-298083EC34D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{305BA2B0-5DA0-43D1-9953-CB8505B30DBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{305BA2B0-5DA0-43D1-9953-CB8505B30DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{305BA2B0-5DA0-43D1-9953-CB8505B30DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{305BA2B0-5DA0-43D1-9953-CB8505B30DBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2FA777D6-8B26-4380-9ABF-837C1C2A59E0} = {9DBA9B17-4908-41F9-84F4-F92B8A7B9687}
@@ -64,5 +70,6 @@ Global
 		{8B76B6ED-B104-440D-A530-CA16664604FD} = {B1DCD034-4E6C-4E92-A38D-150B18B65BD3}
 		{FEE1EE91-190A-4E79-894D-0D73EC54D424} = {8B76B6ED-B104-440D-A530-CA16664604FD}
 		{BA5501A3-07A6-4281-A217-298083EC34D2} = {F6CF824B-E87A-4267-B18F-BE9DF4591821}
+		{305BA2B0-5DA0-43D1-9953-CB8505B30DBF} = {F6CF824B-E87A-4267-B18F-BE9DF4591821}
 	EndGlobalSection
 EndGlobal

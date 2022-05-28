@@ -6,11 +6,22 @@ namespace Test.App.Shop.Application.Commands;
 
 public class RegisterUserCommand : Command, IRequest<Unit>
 {
-    public string Name;
-    public string Cpf;
-    public DateTime BirthDate;
-    public int GenderId;
-    public UserAddressDto Address;
+    public string FullName { get; }
+    public string Cpf { get; }
+    public DateTime BirthDate { get; }
+    public int GenderId { get; }
+    public UserAddressDto Address { get; }
+    public string Password { get; }
+
+    public RegisterUserCommand(string fullName, string cpf, DateTime birthDate, int genderId, UserAddressDto address, string password)
+    {
+        FullName = fullName;
+        Cpf = cpf;
+        BirthDate = birthDate;
+        GenderId = genderId;
+        Address = address;
+        Password = password;
+    }
 
     public override bool IsValid()
     {

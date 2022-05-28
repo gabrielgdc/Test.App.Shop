@@ -20,11 +20,11 @@ public static class SwaggerSetup
 		{
 			s.SwaggerDoc("v1", new OpenApiInfo
 			{
-				Title = "Your Api Name",
+				Title = "Your Api FullName",
 				Description = "Some description",
 				Contact = new OpenApiContact {Name = "YourName", Email = "youremail@email.com"}
 				//you can add a contact URI with you want
-				// Contact = new OpenApiContact { Name = "ContactName", Email = "email@gmail.com", Url = new Uri("https://yoursite.com") }
+				// Contact = new OpenApiContact { FullName = "ContactName", Email = "email@gmail.com", Url = new Uri("https://yoursite.com") }
 			});
 
 			// here it's adding a new authorization header to swagger ui, the default is JWT Bearer Token, but you can use anyone

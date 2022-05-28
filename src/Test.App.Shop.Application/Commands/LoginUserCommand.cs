@@ -1,18 +1,23 @@
 ﻿using MediatR;
+using Test.App.Shop.Application.Dtos;
+using Test.App.Shop.Application.Validations;
 
 namespace Test.App.Shop.Application.Commands;
 
-public class LoginUserCommand : Command, IRequest
+public class LoginUserCommand : Command, IRequest<UserLoggedInDto>
 {
-    public string Email { get; }
+    public string Cpf { get; }
+    public string Password { get; }
 
-    public LoginUserCommand(string email)
+    public LoginUserCommand(string cpf, string password)
     {
-        Email = email;
+        Cpf = cpf;
+        Password = password;
     }
 
     public override bool IsValid()
     {
-        throw new System.NotImplementedException();
+        ValidationResult = new LoginUserCommandValidation().Validate(this);
+        return ValidationResult.IsValid;
     }
 }

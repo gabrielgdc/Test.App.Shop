@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Test.App.Shop.Infra.CrossCutting.Environments.Configurations;
+using Test.App.Shop.Infra.Data.Mappings.Database;
 
 namespace Test.App.Shop.Infra.Data.Context;
 
@@ -11,6 +12,10 @@ public class ApplicationDbContext : DbContext
 {
     private readonly IMediator _bus;
     private readonly ApplicationConfiguration _applicationConfiguration;
+
+    protected ApplicationDbContext()
+    {
+    }
 
     public ApplicationDbContext(ApplicationConfiguration applicationConfiguration)
     {
@@ -32,7 +37,8 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // sample: modelBuilder.ApplyConfiguration(new UserMap());
+        modelBuilder.ApplyConfiguration(new UserMap());
+        modelBuilder.ApplyConfiguration(new UserGenderMap());
     }
 
     public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))
