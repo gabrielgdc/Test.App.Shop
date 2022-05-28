@@ -33,7 +33,7 @@ public class ApplicationDbContext : DbContext
         _applicationConfiguration = applicationConfiguration;
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlServer("Server=127.0.0.1;Database=applications-shop;User=sa;Password=RootPassword@1234;");
+    protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlServer(_applicationConfiguration.ConnectionString ?? string.Empty);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
