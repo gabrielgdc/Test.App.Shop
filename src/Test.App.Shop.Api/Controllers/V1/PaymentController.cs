@@ -4,13 +4,16 @@ using System.Threading.Tasks;
 using Test.App.Shop.Api.Dtos;
 using Test.App.Shop.Domain.Exceptions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Test.App.Shop.Infra.CrossCutting.IoC.Configurations.Authentication;
 
 namespace Test.App.Shop.Api.Controllers.V1;
 
 [ApiVersion("1")]
 [ApiController]
+[Authorize(AuthenticationSchemes = CustomAuthenticationSchemes.Bearer)]
 public class PaymentController : BaseController
 {
     public PaymentController(INotificationHandler<ExceptionNotification> notifications) : base(notifications)
