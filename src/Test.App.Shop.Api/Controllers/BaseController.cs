@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Test.App.Shop.Api.Controllers;
 
-[Route("your-project-name/[controller]/v{version:apiVersion}")]
+[Route("/applications/shop/[controller]/v{version:apiVersion}")]
 [ServiceFilter(typeof(GlobalExceptionFilterAttribute))]
 public class BaseController : Controller
 {

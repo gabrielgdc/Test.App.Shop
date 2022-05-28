@@ -9,12 +9,14 @@
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="11.0.1" />
         <PackageReference Include="FluentValidation" Version="11.0.1" />
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.4" />
         <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
     </ItemGroup>
     
     <ItemGroup>
       <ProjectReference Include="..\Test.App.Shop.Domain\Test.App.Shop.Domain.csproj" />
+      <ProjectReference Include="..\Test.App.Shop.Infra.CrossCutting.Environments\Test.App.Shop.Infra.CrossCutting.Environments.csproj" />
     </ItemGroup>
 
 </Project>
