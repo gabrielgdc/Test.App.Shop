@@ -1,5 +1,6 @@
 ﻿using System;
 using MediatR;
+using Test.App.Shop.Application.Validations;
 
 namespace Test.App.Shop.Application.Commands;
 
@@ -16,5 +17,9 @@ public class NewOrderCommand : Command, IRequest<Unit>
         PaymentId = paymentId;
     }
 
-    public override bool IsValid() => throw new System.NotImplementedException();
+    public override bool IsValid()
+    {
+        ValidationResult = new NewOrderCommandValidation().Validate(this);
+        return ValidationResult.IsValid;
+    }
 }
