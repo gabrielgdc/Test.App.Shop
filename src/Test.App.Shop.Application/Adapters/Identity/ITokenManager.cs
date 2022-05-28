@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Collections.Generic;
 using Test.App.Shop.Domain.Aggregates.UserAggregate;
 
 namespace Test.App.Shop.Application.Adapters.Identity;
