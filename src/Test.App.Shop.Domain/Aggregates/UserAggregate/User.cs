@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Test.App.Shop.Domain.Aggregates.PaymentMethodAggregate;
 using Test.App.Shop.Domain.Exceptions;
 using Test.App.Shop.Domain.SeedWork;
 

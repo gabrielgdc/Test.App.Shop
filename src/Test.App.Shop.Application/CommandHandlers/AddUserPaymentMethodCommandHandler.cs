@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Test.App.Shop.Application.Commands;
-using Test.App.Shop.Domain.Aggregates.PaymentMethodAggregate;
 using Test.App.Shop.Domain.Aggregates.UserAggregate;
 using Test.App.Shop.Domain.Exceptions;
 using Test.App.Shop.Domain.SeedWork;

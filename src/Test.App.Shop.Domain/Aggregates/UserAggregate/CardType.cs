@@ -1,6 +1,6 @@
 ﻿using Test.App.Shop.Domain.SeedWork;
 
-namespace Test.App.Shop.Domain.Aggregates.PaymentMethodAggregate;
+namespace Test.App.Shop.Domain.Aggregates.UserAggregate;
 
 public class CardType : Enumeration
 {

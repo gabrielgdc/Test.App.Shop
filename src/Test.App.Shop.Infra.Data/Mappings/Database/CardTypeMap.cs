@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Test.App.Shop.Domain.Aggregates.PaymentMethodAggregate;
+using Test.App.Shop.Domain.Aggregates.UserAggregate;
 using Test.App.Shop.Domain.SeedWork;
 
 namespace Test.App.Shop.Infra.Data.Mappings.Database;
