@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using MediatR;
 using Test.App.Shop.Application.Validations;
 
@@ -8,19 +9,19 @@ public class RegisterUserCommand : Command, IRequest<Unit>
 {
     public string FullName { get; }
     public string Cpf { get; }
+    public string Password { get; }
     public DateTime BirthDate { get; }
     public int GenderId { get; }
     public UserAddressDto Address { get; }
-    public string Password { get; }
 
-    public RegisterUserCommand(string fullName, string cpf, DateTime birthDate, int genderId, UserAddressDto address, string password)
+    public RegisterUserCommand(string fullName, string cpf, string password, string birthDate, int genderId, UserAddressDto address)
     {
         FullName = fullName;
         Cpf = cpf;
-        BirthDate = birthDate;
+        Password = password;
+        BirthDate = DateTime.ParseExact(birthDate, "dd/MM/yyyy", new CultureInfo(CultureInfo.CurrentCulture.LCID));
         GenderId = genderId;
         Address = address;
-        Password = password;
     }
 
     public override bool IsValid()

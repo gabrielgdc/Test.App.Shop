@@ -13,7 +13,7 @@ public class ApplicationDbContext : DbContext
     private readonly IMediator _bus;
     private readonly ApplicationConfiguration _applicationConfiguration;
 
-    protected ApplicationDbContext()
+    public ApplicationDbContext()
     {
     }
 
@@ -33,12 +33,14 @@ public class ApplicationDbContext : DbContext
         _applicationConfiguration = applicationConfiguration;
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlServer(_applicationConfiguration.ConnectionString ?? string.Empty);
+    protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlServer("Server=127.0.0.1;Database=applications-shop;User=sa;Password=RootPassword@1234;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new UserMap());
         modelBuilder.ApplyConfiguration(new UserGenderMap());
+        modelBuilder.ApplyConfiguration(new PaymentMethodMap());
+        modelBuilder.ApplyConfiguration(new CardTypeMap());
     }
 
     public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))

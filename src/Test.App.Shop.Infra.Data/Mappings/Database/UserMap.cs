@@ -27,7 +27,7 @@ public class UserMap : IEntityTypeConfiguration<User>
             .HasColumnName("BirthDate")
             .IsRequired();
 
-        builder.Property("GenderId")
+        builder.Property("_genderId")
             .UsePropertyAccessMode(PropertyAccessMode.Field)
             .HasColumnName("GenderId")
             .IsRequired();
@@ -35,7 +35,7 @@ public class UserMap : IEntityTypeConfiguration<User>
         builder.HasOne(user => user.Gender)
             .WithMany()
             .IsRequired()
-            .HasForeignKey("GenderId")
+            .HasForeignKey("_genderId")
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.OwnsOne(user => user.Address, address =>
@@ -93,6 +93,9 @@ public class UserMap : IEntityTypeConfiguration<User>
             .HasColumnName("Password")
             .IsRequired();
 
-        builder.Ignore(user => user.Gender);
+        builder.HasMany(user => user.PaymentMethods)
+            .WithOne()
+            .HasForeignKey("UserId")
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -16,8 +16,7 @@ public class LoginUserCommandHandler : CommandHandler, IRequestHandler<LoginUser
 {
     private readonly ITokenManager _tokenManager;
     private readonly IUserRepository _userRepository;
-    private ILogger<LoginUserCommandHandler> _logger;
-
+    private readonly ILogger<LoginUserCommandHandler> _logger;
 
     public LoginUserCommandHandler(
         IUnitOfWork uow,

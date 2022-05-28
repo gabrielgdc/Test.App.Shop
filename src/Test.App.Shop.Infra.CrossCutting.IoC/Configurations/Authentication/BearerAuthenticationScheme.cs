@@ -55,7 +55,7 @@ public class BearerAuthenticationScheme : AuthenticationHandler<BearerAuthentica
 
             var claims = new List<Claim>
             {
-                new("UserId", readToken.Payload.Sub),
+                new(UserAuthenticationClaims.UserId, readToken.Payload.Sub),
             };
 
             var identity = new ClaimsIdentity(claims, Scheme.Name);

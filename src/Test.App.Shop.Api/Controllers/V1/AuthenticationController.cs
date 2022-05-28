@@ -32,8 +32,17 @@ public class AuthenticationController : BaseController
 
     [HttpPost("register")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> Register([FromBody] RegisterUserCommand registerUserCommand)
+    public async Task<IActionResult> Register([FromBody] RegisterUserDto registerUserDto)
     {
+        var registerUserCommand = new RegisterUserCommand(
+            registerUserDto.FullName,
+            registerUserDto.Cpf,
+            registerUserDto.Password,
+            registerUserDto.BirthDate,
+            registerUserDto.GenderId,
+            registerUserDto.Address
+        );
+
         await _bus.Send(registerUserCommand);
 
         return Response(Ok());

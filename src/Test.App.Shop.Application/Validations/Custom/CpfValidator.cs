@@ -6,17 +6,13 @@ using FluentValidation.Validators;
 
 namespace Test.App.Shop.Application.Validations.Custom;
 
-public class CpfValidator<T, TProperty> : PropertyValidator<T, string>
+public class CpfValidator<T> : PropertyValidator<T, string>
 {
     private const int ValidLength = 11;
     private static IEnumerable<int> FirstMultiplierCollection => new[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
     private static IEnumerable<int> SecondMultiplierCollection => new[] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
 
     public override string Name => "Cpf Validator";
-
-    public CpfValidator()
-    {
-    }
 
     public override bool IsValid(ValidationContext<T> context, string value)
     {

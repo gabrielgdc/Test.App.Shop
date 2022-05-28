@@ -32,7 +32,7 @@ public abstract class CommandHandler
 		if (_notifications.HasNotifications()) return false;
 		if (await _uow.CommitAsync()) return true;
 
-		await Bus.Publish(new ExceptionNotification("002", "We had a problem during saving your data."));
+		await Bus.Publish(new ExceptionNotification("002", "Não foi possível salvar a informação"));
 
 		return false;
 	}

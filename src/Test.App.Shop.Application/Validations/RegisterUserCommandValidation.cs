@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FluentValidation;
 using Test.App.Shop.Application.Commands;
 using Test.App.Shop.Application.Validations.Custom;
@@ -15,6 +16,7 @@ public class RegisterUserCommandValidation : AbstractValidator<RegisterUserComma
         ValidateFullName();
         ValidateAddress();
         ValidatePassword();
+        ValidateBirthDate();
         ValidateGenderId();
     }
 
@@ -103,6 +105,16 @@ public class RegisterUserCommandValidation : AbstractValidator<RegisterUserComma
             .NotEmpty()
             .NotNull()
             .WithMessage("Informe uma senha válida")
+            .WithErrorCode("88");
+    }
+
+    private void ValidateBirthDate()
+    {
+        RuleFor(comm => comm.BirthDate)
+            .NotEmpty()
+            .NotNull()
+            .Must(birthDate => birthDate < DateTime.UtcNow)
+            .WithMessage("Informe uma data de nascimento válida")
             .WithErrorCode("88");
     }
 

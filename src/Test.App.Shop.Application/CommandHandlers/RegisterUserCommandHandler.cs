@@ -3,11 +3,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Test.App.Shop.Application.Adapters.Identity;
+using Test.App.Shop.Domain.SeedWork;
+using Test.App.Shop.Domain.Exceptions;
 using Test.App.Shop.Application.Commands;
 using Test.App.Shop.Domain.Aggregates.UserAggregate;
-using Test.App.Shop.Domain.Exceptions;
-using Test.App.Shop.Domain.SeedWork;
 
 namespace Test.App.Shop.Application.CommandHandlers;
 
@@ -32,6 +31,14 @@ public class RegisterUserCommandHandler : CommandHandler, IRequestHandler<Regist
     {
         try
         {
+            var existingUser = await _userRepository.GetUserByCpf(request.Cpf);
+
+            if (existingUser is not null)
+            {
+                await Bus.Publish(new ExceptionNotification("3", "Usuário já cadastrado"), cancellationToken);
+                return default;
+            }
+
             var userAddress = new UserAddress(
                 request.Address.Street,
                 request.Address.Number,
@@ -47,17 +54,12 @@ public class RegisterUserCommandHandler : CommandHandler, IRequestHandler<Regist
 
             _userRepository.Add(user);
 
-            if (await CommitAsync() is false)
-            {
-                await Bus.Publish("Não foi possível registrar o usuário", cancellationToken);
-                return default;
-            }
-
-            return Unit.Value;
+            return await CommitAsync() is false ? default : Unit.Value;
         }
         catch (Exception e)
         {
             _logger.LogCritical("Ocorreu um erro ao cadastro o usuário #### Exception: {0} ####", e.ToString());
+            await Bus.Publish(new ExceptionNotification("2", "Serviço indisponível"), cancellationToken);
             return Unit.Value;
         }
     }
