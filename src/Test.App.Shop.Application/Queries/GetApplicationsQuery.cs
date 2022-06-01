@@ -4,6 +4,6 @@ using Test.App.Shop.Application.Dtos;
 
 namespace Test.App.Shop.Application.Queries;
 
-public class GetApplicationsQuery : Query<IEnumerable<ApplicationDto>>, IRequest<Unit>
+public class GetApplicationsQuery : Query<IEnumerable<ApplicationDto>>
 {
 }

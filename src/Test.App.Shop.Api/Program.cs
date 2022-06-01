@@ -27,6 +27,7 @@ builder.Services.AddScoped<GlobalExceptionFilterAttribute>();
 builder.Services.AddDatabaseSetup();
 builder.Services.AddControllers();
 builder.Services.AddHealthCheck(builder.Configuration);
+builder.Services.AddQueue(builder.Configuration);
 
 var app = builder.Build();
 

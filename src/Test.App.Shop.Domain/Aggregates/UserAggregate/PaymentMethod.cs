@@ -12,6 +12,7 @@ public class PaymentMethod : Entity
     public string CardHolderName { get; }
     public DateTime ExpirationDate { get; }
     public CardType CardType { get; }
+    public decimal Limit { get; private set; }
     private readonly int _cardTypeId;
 
 
@@ -26,6 +27,7 @@ public class PaymentMethod : Entity
         SecurityNumber = securityNumber;
         CardHolderName = cardHolderName;
         ExpirationDate = expirationDate;
+        Limit = 1000;
         _cardTypeId = cardTypeId;
     }
 
@@ -37,5 +39,14 @@ public class PaymentMethod : Entity
     public CardType GetCardType()
     {
         return Enumeration.FromId<CardType>(_cardTypeId);
+    }
+
+    public bool Effect(decimal value)
+    {
+        var remainingBalance = Limit - value;
+        if (remainingBalance < 0) return false;
+
+        Limit -= value;
+        return true;
     }
 }

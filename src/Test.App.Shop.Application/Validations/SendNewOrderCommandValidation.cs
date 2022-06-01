@@ -4,9 +4,9 @@ using Test.App.Shop.Application.Commands;
 
 namespace Test.App.Shop.Application.Validations;
 
-public class NewOrderCommandValidation : AbstractValidator<NewOrderCommand>
+public class SendNewOrderCommandValidation : AbstractValidator<SendNewOrderCommand>
 {
-    public NewOrderCommandValidation()
+    public SendNewOrderCommandValidation()
     {
         ValidateApplicationsIds();
         ValidateUserId();
@@ -15,7 +15,7 @@ public class NewOrderCommandValidation : AbstractValidator<NewOrderCommand>
 
     private void ValidateApplicationsIds()
     {
-        RuleFor(comm => comm.ApplicationsIds)
+        RuleFor(comm => comm.CartProductsIds)
             .NotEmpty()
             .NotNull()
             .Must(applicationsIds => applicationsIds.Any())

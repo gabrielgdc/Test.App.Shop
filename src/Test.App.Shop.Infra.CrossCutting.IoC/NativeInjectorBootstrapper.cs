@@ -7,9 +7,13 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Test.App.Shop.Application.Adapters.Identity;
+using Test.App.Shop.Domain.Aggregates.ApplicationAggregate;
+using Test.App.Shop.Domain.Aggregates.OrdersAggregate;
 using Test.App.Shop.Domain.Aggregates.UserAggregate;
 using Test.App.Shop.Domain.SeedWork;
 using Test.App.Shop.Infra.CrossCutting.Identity.Core;
+using Test.App.Shop.Infra.Data.Repositories.ApplicationRepository;
+using Test.App.Shop.Infra.Data.Repositories.OrdersRepository;
 using Test.App.Shop.Infra.Data.Repositories.UserRepository;
 using Test.App.Shop.Infra.Data.UnitOfWork;
 
@@ -30,6 +34,8 @@ public static class NativeInjectorBootstrapper
         services.AddMemoryCache();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<IApplicationRepository, ApplicationRepository>();
     }
 
     private static void RegisterMediatR(IServiceCollection services)
@@ -50,6 +56,7 @@ public static class NativeInjectorBootstrapper
     {
         services.AddSingleton(configuration.GetSection(nameof(ApplicationConfiguration)).Get<ApplicationConfiguration>());
         services.AddSingleton(configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>());
+        services.AddSingleton(configuration.GetSection(nameof(RabbitMqConfiguration)).Get<RabbitMqConfiguration>());
     }
 
     private static void RegisterIdentity(IServiceCollection services)

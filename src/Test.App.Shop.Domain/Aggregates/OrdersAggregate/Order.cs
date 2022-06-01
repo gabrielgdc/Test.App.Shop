@@ -10,26 +10,24 @@ namespace Test.App.Shop.Domain.Aggregates.OrdersAggregate;
 public class Order : Entity, IAggregateRoot
 {
     public Guid UserId { get; }
-    public Guid PaymentMethodId { get; private set; }
+    public Guid? PaymentMethodId { get; private set; }
     public decimal TotalPrice { get; private set; }
     public DateTime CreatedAt { get; }
-    public OrderStatus OrderStatus { get; }
     public IEnumerable<Application> OrderItems => _orderItems.AsReadOnly();
-
     private readonly List<Application> _orderItems;
-    private readonly int _orderStatusId;
+    public OrderStatus Status { get; }
+    private int _statusId { get; set; }
 
     protected Order()
     {
         _orderItems = new List<Application>();
     }
 
-    public Order(Guid userId, Guid paymentMethodId)
+    public Order(Guid userId)
     {
         UserId = userId;
-        PaymentMethodId = paymentMethodId;
 
-        _orderStatusId = OrderStatus.Pending.Id;
+        _statusId = OrderStatus.Pending.Id;
         _orderItems = new List<Application>();
 
         CreatedAt = DateTime.UtcNow;
@@ -41,10 +39,15 @@ public class Order : Entity, IAggregateRoot
         TotalPrice = _orderItems.Sum(x => x.Price);
     }
 
-    public void SetPaymentId(Guid paymentMethodId)
+    public void Accept(Guid paymentMethodId)
     {
-        if (_orderStatusId != OrderStatus.Id) throw new DomainException("Ordem não está pendente");
-
         PaymentMethodId = paymentMethodId;
+        _statusId = OrderStatus.Accept.Id;
+    }
+
+    public void Reject(Guid paymentMethodId)
+    {
+        PaymentMethodId = paymentMethodId;
+        _statusId = OrderStatus.Rejected.Id;
     }
 }

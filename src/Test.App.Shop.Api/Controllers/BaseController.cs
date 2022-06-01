@@ -29,7 +29,7 @@ public class BaseController : Controller
     {
         if (!IsValidOperation())
         {
-            return BadRequest(new Response<object>(
+            return BadRequest(new ResponseDto<object>(
                 _notifications.GetNotifications())
             );
         }

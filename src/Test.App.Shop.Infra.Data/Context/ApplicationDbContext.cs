@@ -33,7 +33,7 @@ public class ApplicationDbContext : DbContext
         _applicationConfiguration = applicationConfiguration;
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlServer(_applicationConfiguration.ConnectionString ?? string.Empty);
+    protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlServer("Server=127.0.0.1;Database=applications-shop;User=sa;Password=RootPassword@1234;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -41,6 +41,9 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new UserGenderMap());
         modelBuilder.ApplyConfiguration(new PaymentMethodMap());
         modelBuilder.ApplyConfiguration(new CardTypeMap());
+        modelBuilder.ApplyConfiguration(new ApplicationMap());
+        modelBuilder.ApplyConfiguration(new OrderMap());
+        modelBuilder.ApplyConfiguration(new OrderStatusMap());
     }
 
     public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))

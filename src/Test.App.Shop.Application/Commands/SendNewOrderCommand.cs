@@ -4,22 +4,22 @@ using Test.App.Shop.Application.Validations;
 
 namespace Test.App.Shop.Application.Commands;
 
-public class NewOrderCommand : Command, IRequest<Unit>
+public class SendNewOrderCommand : Command, IRequest<Unit>
 {
-    public Guid[] ApplicationsIds { get; }
+    public Guid[] CartProductsIds { get; }
     public Guid UserId { get; }
     public Guid PaymentId { get; }
 
-    public NewOrderCommand(Guid[] applicationsIds, Guid userId, Guid paymentId)
+    public SendNewOrderCommand(Guid[] cartProductsIds, Guid userId, Guid paymentId)
     {
-        ApplicationsIds = applicationsIds;
+        CartProductsIds = cartProductsIds;
         UserId = userId;
         PaymentId = paymentId;
     }
 
     public override bool IsValid()
     {
-        ValidationResult = new NewOrderCommandValidation().Validate(this);
+        ValidationResult = new SendNewOrderCommandValidation().Validate(this);
         return ValidationResult.IsValid;
     }
 }

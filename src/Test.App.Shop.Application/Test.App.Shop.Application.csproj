@@ -8,7 +8,9 @@
 
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="11.0.1" />
+        <PackageReference Include="Dapper" Version="2.0.123" />
         <PackageReference Include="FluentValidation" Version="11.0.1" />
+        <PackageReference Include="MassTransit.Abstractions" Version="8.0.2" />
         <PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.4" />
         <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />

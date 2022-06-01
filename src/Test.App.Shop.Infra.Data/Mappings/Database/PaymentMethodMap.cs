@@ -45,5 +45,11 @@ public class PaymentMethodMap : IEntityTypeConfiguration<PaymentMethod>
             .HasColumnName("ExpirationDate")
             .HasMaxLength(25)
             .IsRequired();
+
+        builder.Property(paymentMethod => paymentMethod.Limit)
+            .UsePropertyAccessMode(PropertyAccessMode.Field)
+            .HasColumnName("Limit")
+            .HasPrecision(18, 4)
+            .IsRequired();
     }
 }

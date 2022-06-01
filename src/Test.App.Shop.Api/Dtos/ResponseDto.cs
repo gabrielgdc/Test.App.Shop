@@ -3,19 +3,19 @@ using Test.App.Shop.Domain.Exceptions;
 
 namespace Test.App.Shop.Api.Dtos;
 
-public class Response<T>
+public class ResponseDto<T>
 {
     public bool Success { get; }
     public T Data { get; }
     public List<ExceptionNotification> Errors { get; }
 
-    public Response(T data)
+    public ResponseDto(T data)
     {
         Success = true;
         Data = data;
     }
 
-    public Response(List<ExceptionNotification> errors)
+    public ResponseDto(List<ExceptionNotification> errors)
     {
         Success = false;
         Errors = errors;

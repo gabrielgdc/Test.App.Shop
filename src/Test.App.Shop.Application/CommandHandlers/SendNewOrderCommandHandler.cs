@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using MassTransit;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Test.App.Shop.Application.Commands;
+using Test.App.Shop.Application.IntegrationEvents;
 using Test.App.Shop.Domain.Aggregates.ApplicationAggregate;
 using Test.App.Shop.Domain.Aggregates.OrdersAggregate;
 using Test.App.Shop.Domain.Aggregates.UserAggregate;
@@ -14,30 +17,33 @@ using Test.App.Shop.Domain.SeedWork;
 
 namespace Test.App.Shop.Application.CommandHandlers;
 
-public class NewOrderCommandHandler : CommandHandler, IRequestHandler<NewOrderCommand>
+public class SendNewOrderCommandHandler : CommandHandler, IRequestHandler<SendNewOrderCommand>
 {
     private readonly IUserRepository _userRepository;
     private readonly IOrderRepository _orderRepository;
     private readonly IApplicationRepository _applicationRepository;
-    private readonly ILogger<NewOrderCommandHandler> _logger;
+    private readonly IPublishEndpoint _publishEndpoint;
+    private readonly ILogger<SendNewOrderCommandHandler> _logger;
 
-    public NewOrderCommandHandler(
+    public SendNewOrderCommandHandler(
         IUnitOfWork uow,
         IMediator bus,
         INotificationHandler<ExceptionNotification> notifications,
         IUserRepository userRepository,
         IOrderRepository orderRepository,
         IApplicationRepository applicationRepository,
-        ILogger<NewOrderCommandHandler> logger
+        IPublishEndpoint publishEndpoint,
+        ILogger<SendNewOrderCommandHandler> logger
     ) : base(uow, bus, notifications)
     {
         _userRepository = userRepository;
         _orderRepository = orderRepository;
         _applicationRepository = applicationRepository;
         _logger = logger;
+        _publishEndpoint = publishEndpoint;
     }
 
-    public async Task<Unit> Handle(NewOrderCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(SendNewOrderCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -57,16 +63,21 @@ public class NewOrderCommandHandler : CommandHandler, IRequestHandler<NewOrderCo
 
             var applications = new List<Domain.Aggregates.ApplicationAggregate.Application>();
 
-            foreach (var applicationId in request.ApplicationsIds)
+            foreach (var applicationId in request.CartProductsIds)
             {
                 applications.Add(await _applicationRepository.GetApplicationById(applicationId));
             }
 
-            var order = new Order(request.UserId, request.PaymentId);
+            var order = new Order(request.UserId);
 
             order.AddItems(applications);
 
-            // TODO: Publicar pra fila
+            _orderRepository.Add(order);
+
+            if (await CommitAsync() is false) return Unit.Value;
+
+            var submittedOrderEvent = new OrderSubmittedIntegrationEvent(order.Id, request.UserId, request.PaymentId);
+            await _publishEndpoint.Publish(submittedOrderEvent, cancellationToken);
 
             return Unit.Value;
         }

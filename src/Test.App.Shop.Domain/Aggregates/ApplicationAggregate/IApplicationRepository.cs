@@ -6,6 +6,6 @@ namespace Test.App.Shop.Domain.Aggregates.ApplicationAggregate;
 
 public interface IApplicationRepository
 {
-    Task<IEnumerable<Application>> GetApplications();
+    IEnumerable<Application> GetApplications();
     Task<Application> GetApplicationById(Guid id);
 }

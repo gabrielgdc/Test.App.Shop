@@ -11,7 +11,7 @@ public class Entity
 
     public virtual Guid Id => _id;
 
-    protected void SetId()
+    public void SetId()
     {
         _id = Guid.NewGuid();
     }
