@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Test.App.Shop.Application.Commands;
+using Test.App.Shop.Application.Dtos;
+using Test.App.Shop.Application.Queries;
 using Test.App.Shop.Infra.CrossCutting.IoC.Configurations.Authentication;
 
 namespace Test.App.Shop.Api.Controllers.V1;
@@ -61,5 +63,20 @@ public class PaymentMethodController : BaseController
         await _bus.Send(deleteUserCreditCardCommand);
 
         return Response(NoContent());
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<PaymentMethodResponse>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetPaymentMethods()
+    {
+        var userIdentity = (ClaimsIdentity)User.Identity;
+        var sub = userIdentity?.Claims.FirstOrDefault(cl => cl.Type.Equals(UserAuthenticationClaims.UserId))?.Value;
+        var userId = Guid.TryParse(sub, out var parsedUserId) ? parsedUserId : Guid.Empty;
+
+        var query = new GetPaymentMethodsByUserIdQuery(userId);
+
+        var paymentMethods = await _bus.Send(query);
+
+        return Response(Ok(new ResponseDto<IEnumerable<PaymentMethodResponse>>(paymentMethods)));
     }
 }
